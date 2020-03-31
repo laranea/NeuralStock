@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{943A5905-ED21-4702-B6B2-90066C008294}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>twentySix.NeuralStock.Core</RootNamespace>
+    <AssemblyName>twentySix.NeuralStock.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="FANNCSharp.Double">
+      <HintPath>..\Libraries\FANNCSharp.Double.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\Flurl.2.5.0\lib\net40\Flurl.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl.Http, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\Flurl.Http.2.0.1\lib\net45\Flurl.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.6.3.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\HtmlAgilityPack.1.6.3\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>..\Libraries\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\MathNet.Numerics.4.7.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTrader.Indicator">
+      <HintPath>..\Libraries\NetTrader.Indicator.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection">
+      <HintPath>..\twentySix.NeuralStock\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\System.Reflection.TypeExtensions.4.3.0\lib\net462\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>..\twentySix.NeuralStock\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TA-Lib-Core, Version=1.0.4998.21369, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\twentySix.NeuralStock\packages\TA-Lib.0.5.0.3\lib\TA-Lib-Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="YahooFinanceAPI">
+      <HintPath>..\Libraries\YahooFinanceAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\DuplicateKeyComparer.cs" />
+    <Compile Include="Common\WebClientExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\Countries\ICountry.cs" />
+    <Compile Include="Data\Sources\MorningStarDataSource.cs" />
+    <Compile Include="Data\Sources\IDataSource.cs" />
+    <Compile Include="Data\Countries\Portugal.cs" />
+    <Compile Include="Data\Countries\Singapore.cs" />
+    <Compile Include="Data\Sources\GoogleFinanceDataSource.cs" />
+    <Compile Include="Data\Sources\YahooFinanceDataSource.cs" />
+    <Compile Include="DTOs\FavouriteDTO.cs" />
+    <Compile Include="DTOs\NeuralStockSettingsDTO.cs" />
+    <Compile Include="DTOs\BestNetworkDTO.cs" />
+    <Compile Include="Enums\SeverityEnum.cs" />
+    <Compile Include="Enums\SignalEnum.cs" />
+    <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Messages\TrainStatusMessage.cs" />
+    <Compile Include="Models\AnnDataPoint.cs" />
+    <Compile Include="Models\CompleteTransaction.cs" />
+    <Compile Include="Models\NeuralStockSettings.cs" />
+    <Compile Include="Models\Prediction.cs" />
+    <Compile Include="Models\StockPortfolio.cs" />
+    <Compile Include="Models\Quote.cs" />
+    <Compile Include="DTOs\HistoricalDataDTO.cs" />
+    <Compile Include="DTOs\StockDTO.cs" />
+    <Compile Include="Helpers\ApplicationHelper.cs" />
+    <Compile Include="Models\HistoricalData.cs" />
+    <Compile Include="Models\Stock.cs" />
+    <Compile Include="Models\TrainingSession.cs" />
+    <Compile Include="Models\Trade.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProfitLossCalculator.cs" />
+    <Compile Include="Services\Interfaces\IDataProcessorService.cs" />
+    <Compile Include="Services\Interfaces\IStatisticsService.cs" />
+    <Compile Include="Services\Interfaces\IDownloaderService.cs" />
+    <Compile Include="Services\Interfaces\ILoggingService.cs" />
+    <Compile Include="Services\Interfaces\IPersistenceService.cs" />
+    <Compile Include="Services\DataProcessorService.cs" />
+    <Compile Include="Services\StatisticsService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\DownloaderService.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Strategies\IStrategy.cs" />
+    <Compile Include="Strategies\StrategyBase.cs" />
+    <Compile Include="Strategies\StrategyI.cs" />
+    <Compile Include="Strategies\StrategySettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

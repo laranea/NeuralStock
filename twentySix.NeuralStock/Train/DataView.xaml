@@ -1,0 +1,605 @@
+﻿<UserControl
+    x:Class="twentySix.NeuralStock.Train.DataView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:twentySix.NeuralStock.Train"
+    Name="this"
+    d:DataContext="{d:DesignInstance Type=viewModels:TrainViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Shared.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <dxlc:LayoutGroup
+        Margin="0,0,0,10"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        View="Tabs">
+
+        <dxlc:LayoutGroup
+            DataContext="{Binding TrainingSession.BestProfitLossCalculator}"
+            Header="Data"
+            Orientation="Vertical">
+            <dxlc:LayoutGroup.Resources>
+                <Style TargetType="dxe:TextEdit">
+                    <Setter Property="Margin" Value="20,0,0,0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="FontFamily" Value="Titillium Web" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="IsReadOnly" Value="True" />
+                    <Setter Property="ShowBorder" Value="False" />
+                </Style>
+            </dxlc:LayoutGroup.Resources>
+            <dxlc:LayoutGroup.ItemStyle>
+                <Style TargetType="dxlc:LayoutItem">
+                    <Setter Property="LabelPosition" Value="Left" />
+                    <Setter Property="LabelStyle">
+                        <Setter.Value>
+                            <Style TargetType="dxlc:LayoutItemLabel">
+                                <Setter Property="FontFamily" Value="Titillium Web" />
+                                <Setter Property="FontWeight" Value="Light" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="Opacity" Value="0.7" />
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </dxlc:LayoutGroup.ItemStyle>
+            <dxlc:LayoutGroup
+                Header="Best"
+                ItemSpace="5"
+                Orientation="Vertical"
+                View="GroupBox">
+                <dxlc:LayoutGroup Orientation="Horizontal">
+                    <dxlc:LayoutItem Label="Profit">
+                        <dxe:TextEdit
+                            EditValue="{Binding PL, Mode=OneWay}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="%">
+                        <dxe:TextEdit
+                            EditValue="{Binding PLPercentage, Mode=OneWay}"
+                            FontWeight="SemiBold"
+                            Foreground="Orange"
+                            Mask="p"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="%/yr">
+                        <dxe:TextEdit
+                            EditValue="{Binding PLPercentageYear, Mode=OneWay}"
+                            Mask="p"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="b&amp;h ratio">
+                        <dxe:TextEdit
+                            EditValue="{Binding BuyHoldDifference, Mode=OneWay}"
+                            Mask="f2"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Horizontal">
+                    <dxlc:LayoutItem Label="median">
+                        <dxe:TextEdit
+                            EditValue="{Binding MedianPL, Mode=OneWay}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="stddev">
+                        <dxe:TextEdit
+                            EditValue="{Binding StandardDeviationPL, Mode=OneWay}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="median win">
+                        <dxe:TextEdit
+                            EditValue="{Binding MedianWinningPL, Mode=OneWay}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="median loss">
+                        <dxe:TextEdit
+                            EditValue="{Binding MedianLossingPL, Mode=OneWay}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Horizontal">
+                    <dxlc:LayoutItem Label="buy">
+                        <dxe:TextEdit
+                            EditValue="{Binding NumberBuySignals, Mode=OneWay}"
+                            Mask="d"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="sell">
+                        <dxe:TextEdit
+                            EditValue="{Binding NumberSellSignals, Mode=OneWay}"
+                            Mask="d"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="% winning">
+                        <dxe:TextEdit
+                            EditValue="{Binding PercentageWinningTransactions, Mode=OneWay}"
+                            Foreground="Orange"
+                            Mask="p"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup
+                Header="All networks"
+                Orientation="Vertical"
+                View="GroupBox">
+                <dxlc:LayoutGroup ItemLabelsAlignment="Local" Orientation="Horizontal">
+                    <dxlc:LayoutItem Label="median">
+                        <dxe:TextEdit
+                            EditValue="{Binding DataContext.TrainingSession.AllNetworksPL, Mode=OneWay, ElementName=this}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="stddev ">
+                        <dxe:TextEdit
+                            EditValue="{Binding DataContext.TrainingSession.AllNetworksStdDev, Mode=OneWay, ElementName=this}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="min">
+                        <dxe:TextEdit
+                            EditValue="{Binding DataContext.TrainingSession.AllNetworksMin, Mode=OneWay, ElementName=this}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="sigma">
+                        <dxe:TextEdit
+                            EditValue="{Binding DataContext.TrainingSession.AllNetworksSigma, Mode=OneWay, ElementName=this}"
+                            Mask="f2"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="Charts" ItemSpace="0">
+                    <dxc:ChartControl
+                        Margin="0"
+                        Padding="10,0"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CrosshairEnabled="True"
+                        SelectionMode="None">
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions
+                                ArgumentLineBrush="#3fff"
+                                HighlightPoints="False"
+                                ValueLineBrush="#3fff" />
+                        </dxc:ChartControl.CrosshairOptions>
+                        <dxc:ChartControl.Diagram>
+                            <dxc:XYDiagram2D>
+                                <dxc:XYDiagram2D.DefaultPane>
+                                    <dxc:Pane DomainBrush="Transparent" />
+                                </dxc:XYDiagram2D.DefaultPane>
+                                <dxc:XYDiagram2D.AxisY>
+                                    <dxc:AxisY2D GridLinesVisible="False" Interlaced="False">
+                                        <dxc:AxisY2D.Label>
+                                            <dxc:AxisLabel FontSize="10" />
+                                        </dxc:AxisY2D.Label>
+                                        <dxc:AxisY2D.WholeRange>
+                                            <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                        </dxc:AxisY2D.WholeRange>
+                                    </dxc:AxisY2D>
+                                </dxc:XYDiagram2D.AxisY>
+                                <dxc:XYDiagram2D.AxisX>
+                                    <dxc:AxisX2D GridLinesVisible="False">
+                                        <dxc:AxisX2D.Label>
+                                            <dxc:AxisLabel FontSize="10" />
+                                        </dxc:AxisX2D.Label>
+                                        <dxc:AxisX2D.DateTimeScaleOptions>
+                                            <dxc:ManualDateTimeScaleOptions MeasureUnit="Day" WorkdaysOnly="True" />
+                                        </dxc:AxisX2D.DateTimeScaleOptions>
+                                    </dxc:AxisX2D>
+                                </dxc:XYDiagram2D.AxisX>
+                                <dxc:XYDiagram2D.Series>
+                                    <dxc:LineSeries2D
+                                        ArgumentDataMember="Date"
+                                        ArgumentScaleType="DateTime"
+                                        DataSource="{Binding DataContext.TestingData.Quotes.Values, ElementName=this}"
+                                        LabelsVisibility="False"
+                                        MarkerVisible="False"
+                                        ShowInLegend="False"
+                                        ValueDataMember="Close">
+                                        <dxc:LineSeries2D.LineStyle>
+                                            <dxc:LineStyle Thickness="2" />
+                                        </dxc:LineSeries2D.LineStyle>
+                                    </dxc:LineSeries2D>
+                                    <dxc:PointSeries2D
+                                        ArgumentDataMember="Key"
+                                        DataSource="{Binding TrainingSession.BestProfitLossCalculator.SellSignals}"
+                                        LabelsVisibility="False"
+                                        MarkerSize="6"
+                                        ShowInLegend="False"
+                                        ValueDataMember="Value">
+                                        <dxc:PointSeries2D.MarkerModel>
+                                            <dxc:CircleMarker2DModel />
+                                        </dxc:PointSeries2D.MarkerModel>
+                                    </dxc:PointSeries2D>
+                                    <dxc:PointSeries2D
+                                        ArgumentDataMember="Key"
+                                        DataSource="{Binding TrainingSession.BestProfitLossCalculator.BuySignals}"
+                                        LabelsVisibility="False"
+                                        MarkerSize="6"
+                                        ShowInLegend="False"
+                                        ValueDataMember="Value">
+                                        <dxc:PointSeries2D.MarkerModel>
+                                            <dxc:CircleMarker2DModel />
+                                        </dxc:PointSeries2D.MarkerModel>
+                                    </dxc:PointSeries2D>
+                                </dxc:XYDiagram2D.Series>
+                            </dxc:XYDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend HorizontalPosition="Left" VerticalPosition="Top" />
+                        </dxc:ChartControl.Legend>
+                    </dxc:ChartControl>
+                    <dxc:ChartControl
+                        Margin="0"
+                        Padding="5,0"
+                        AnimationMode="Disabled"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CrosshairEnabled="True"
+                        DataContext="{Binding TrainingSession}"
+                        SelectionMode="None">
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions
+                                ArgumentLineBrush="#3fff"
+                                HighlightPoints="False"
+                                ValueLineBrush="#3fff" />
+                        </dxc:ChartControl.CrosshairOptions>
+                        <dxc:ChartControl.Diagram>
+                            <dxc:XYDiagram2D>
+                                <dxc:XYDiagram2D.DefaultPane>
+                                    <dxc:Pane DomainBrush="Transparent" />
+                                </dxc:XYDiagram2D.DefaultPane>
+                                <dxc:XYDiagram2D.AxisY>
+                                    <dxc:AxisY2D
+                                        GridLinesVisible="False"
+                                        Interlaced="False"
+                                        LabelPosition="Inside">
+                                        <dxc:AxisY2D.WholeRange>
+                                            <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                        </dxc:AxisY2D.WholeRange>
+                                        <dxc:AxisY2D.Label>
+                                            <dxc:AxisLabel FontSize="8" />
+                                        </dxc:AxisY2D.Label>
+                                    </dxc:AxisY2D>
+                                </dxc:XYDiagram2D.AxisY>
+                                <dxc:XYDiagram2D.AxisX>
+                                    <dxc:AxisX2D GridLinesVisible="False">
+                                        <dxc:AxisX2D.Label>
+                                            <dxc:AxisLabel FontSize="8">
+                                                <dxc:Axis2D.ResolveOverlappingOptions>
+                                                    <dxc:AxisLabelResolveOverlappingOptions AllowRotate="False" />
+                                                </dxc:Axis2D.ResolveOverlappingOptions>
+                                            </dxc:AxisLabel>
+                                        </dxc:AxisX2D.Label>
+                                    </dxc:AxisX2D>
+                                </dxc:XYDiagram2D.AxisX>
+                                <dxc:XYDiagram2D.Series>
+                                    <dxc:PointSeries2D
+                                        ArgumentDataMember="Item1"
+                                        DataSource="{Binding AllNetworksPLsStdDevs}"
+                                        LabelsVisibility="False"
+                                        MarkerSize="4"
+                                        ShowInLegend="False"
+                                        ValueDataMember="Item2">
+                                        <dxc:PointSeries2D.MarkerModel>
+                                            <dxc:SimpleMarker2DModel />
+                                        </dxc:PointSeries2D.MarkerModel>
+                                    </dxc:PointSeries2D>
+                                </dxc:XYDiagram2D.Series>
+                            </dxc:XYDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend HorizontalPosition="Left" VerticalPosition="Top" />
+                        </dxc:ChartControl.Legend>
+                    </dxc:ChartControl>
+                    <dxc:ChartControl
+                        Margin="0"
+                        Padding="5,0"
+                        AnimationMode="Disabled"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CrosshairEnabled="True"
+                        DataContext="{Binding TrainingSession}"
+                        SelectionMode="None">
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions
+                                ArgumentLineBrush="#3fff"
+                                HighlightPoints="False"
+                                ValueLineBrush="#3fff" />
+                        </dxc:ChartControl.CrosshairOptions>
+                        <dxc:ChartControl.Diagram>
+                            <dxc:XYDiagram2D>
+                                <dxc:XYDiagram2D.DefaultPane>
+                                    <dxc:Pane DomainBrush="Transparent" />
+                                </dxc:XYDiagram2D.DefaultPane>
+                                <dxc:XYDiagram2D.AxisY>
+                                    <dxc:AxisY2D
+                                        GridLinesVisible="False"
+                                        Interlaced="False"
+                                        LabelPosition="Inside">
+                                        <dxc:AxisY2D.Label>
+                                            <dxc:AxisLabel FontSize="8" />
+                                        </dxc:AxisY2D.Label>
+                                        <dxc:AxisY2D.WholeRange>
+                                            <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                        </dxc:AxisY2D.WholeRange>
+                                    </dxc:AxisY2D>
+                                </dxc:XYDiagram2D.AxisY>
+                                <dxc:XYDiagram2D.AxisX>
+                                    <dxc:AxisX2D GridLinesVisible="False">
+                                        <dxc:AxisX2D.Label>
+                                            <dxc:AxisLabel FontSize="8">
+                                                <dxc:Axis2D.ResolveOverlappingOptions>
+                                                    <dxc:AxisLabelResolveOverlappingOptions AllowRotate="False" />
+                                                </dxc:Axis2D.ResolveOverlappingOptions>
+                                            </dxc:AxisLabel>
+                                        </dxc:AxisX2D.Label>
+                                    </dxc:AxisX2D>
+                                </dxc:XYDiagram2D.AxisX>
+                                <dxc:XYDiagram2D.Series>
+                                    <dxc:BarSideBySideSeries2D
+                                        ArgumentDataMember="Key"
+                                        ArgumentScaleType="Qualitative"
+                                        BarWidth="0.95"
+                                        DataSource="{Binding AllNetworksPLs}"
+                                        LabelsVisibility="False"
+                                        ShowInLegend="False"
+                                        ValueDataMember="Value">
+                                        <dxc:BarSideBySideSeries2D.Model>
+                                            <dxc:FlatBar2DModel />
+                                        </dxc:BarSideBySideSeries2D.Model>
+                                    </dxc:BarSideBySideSeries2D>
+                                </dxc:XYDiagram2D.Series>
+                            </dxc:XYDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend HorizontalPosition="Left" VerticalPosition="Top" />
+                        </dxc:ChartControl.Legend>
+                    </dxc:ChartControl>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup
+            DataContext="{Binding TrainingSession.BestProfitLossCalculator}"
+            Header="Transactions"
+            Orientation="Vertical">
+            <dxg:GridControl FontFamily="Titillium Web" ItemsSource="{Binding CompleteTransactions}">
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="BuyTrade.Date"
+                        Header="buy date"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="SellTrade.Date"
+                        Header="sell date"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="BuyTrade.NumberOfShares"
+                        Header="shares"
+                        ReadOnly="True" />
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="BuyTrade.Price"
+                        Header="buy price"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="c3" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="SellTrade.Price"
+                        Header="sell price"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="c3" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        AllowSorting="True"
+                        FieldName="PL"
+                        Header="profit"
+                        ReadOnly="True">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="c3" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        AllowCascadeUpdate="False"
+                        AllowScrollAnimation="True"
+                        AutoWidth="True"
+                        HeaderPanelMinHeight="30"
+                        NavigationStyle="Row"
+                        RowMinHeight="24"
+                        ShowGroupPanel="False" />
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup Header="Portfolio Value">
+            <dxc:ChartControl
+                Margin="0"
+                Padding="10,0"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                CrosshairEnabled="True"
+                SelectionMode="None">
+                <dxc:ChartControl.CrosshairOptions>
+                    <dxc:CrosshairOptions
+                        ArgumentLineBrush="#3fff"
+                        HighlightPoints="False"
+                        ValueLineBrush="#3fff" />
+                </dxc:ChartControl.CrosshairOptions>
+                <dxc:ChartControl.Diagram>
+                    <dxc:XYDiagram2D>
+                        <dxc:XYDiagram2D.DefaultPane>
+                            <dxc:Pane DomainBrush="Transparent" />
+                        </dxc:XYDiagram2D.DefaultPane>
+                        <dxc:XYDiagram2D.AxisY>
+                            <dxc:AxisY2D GridLinesVisible="False" Interlaced="False">
+                                <dxc:AxisY2D.Label>
+                                    <dxc:AxisLabel FontSize="10" />
+                                </dxc:AxisY2D.Label>
+                                <dxc:AxisY2D.WholeRange>
+                                    <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                </dxc:AxisY2D.WholeRange>
+                            </dxc:AxisY2D>
+                        </dxc:XYDiagram2D.AxisY>
+                        <dxc:XYDiagram2D.AxisX>
+                            <dxc:AxisX2D GridLinesVisible="False">
+                                <dxc:AxisX2D.Label>
+                                    <dxc:AxisLabel FontSize="10" />
+                                </dxc:AxisX2D.Label>
+                                <dxc:AxisX2D.DateTimeScaleOptions>
+                                    <dxc:ManualDateTimeScaleOptions MeasureUnit="Day" WorkdaysOnly="True" />
+                                </dxc:AxisX2D.DateTimeScaleOptions>
+                            </dxc:AxisX2D>
+                        </dxc:XYDiagram2D.AxisX>
+                        <dxc:XYDiagram2D.Series>
+                            <dxc:LineSeries2D
+                                ArgumentDataMember="Key"
+                                ArgumentScaleType="DateTime"
+                                DataSource="{Binding TrainingSession.BestProfitLossCalculator.PortfolioTotalValue}"
+                                DisplayName="Portfolio Value"
+                                LabelsVisibility="False"
+                                MarkerVisible="False"
+                                ShowInLegend="False"
+                                ValueDataMember="Value">
+                                <dxc:LineSeries2D.LineStyle>
+                                    <dxc:LineStyle Thickness="2" />
+                                </dxc:LineSeries2D.LineStyle>
+                            </dxc:LineSeries2D>
+                        </dxc:XYDiagram2D.Series>
+                    </dxc:XYDiagram2D>
+                </dxc:ChartControl.Diagram>
+                <dxc:ChartControl.Legend>
+                    <dxc:Legend HorizontalPosition="Left" VerticalPosition="Top" />
+                </dxc:ChartControl.Legend>
+            </dxc:ChartControl>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup
+            DataContext="{Binding TrainingSession.BestProfitLossCalculator}"
+            Header="Distribution PL"
+            Orientation="Vertical">
+            <dxc:ChartControl
+                Margin="0"
+                Padding="10,0"
+                AnimationMode="Disabled"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                CrosshairEnabled="True"
+                SelectionMode="None">
+                <dxc:ChartControl.CrosshairOptions>
+                    <dxc:CrosshairOptions
+                        ArgumentLineBrush="#3fff"
+                        HighlightPoints="False"
+                        ValueLineBrush="#3fff" />
+                </dxc:ChartControl.CrosshairOptions>
+                <dxc:ChartControl.Diagram>
+                    <dxc:XYDiagram2D>
+                        <dxc:XYDiagram2D.DefaultPane>
+                            <dxc:Pane DomainBrush="Transparent" />
+                        </dxc:XYDiagram2D.DefaultPane>
+                        <dxc:XYDiagram2D.AxisY>
+                            <dxc:AxisY2D GridLinesVisible="False" Interlaced="False">
+                                <dxc:AxisY2D.Label>
+                                    <dxc:AxisLabel FontSize="10" />
+                                </dxc:AxisY2D.Label>
+                                <dxc:AxisY2D.WholeRange>
+                                    <dxc:Range dxc:AxisY2D.AlwaysShowZeroLevel="False" />
+                                </dxc:AxisY2D.WholeRange>
+                            </dxc:AxisY2D>
+                        </dxc:XYDiagram2D.AxisY>
+                        <dxc:XYDiagram2D.AxisX>
+                            <dxc:AxisX2D GridLinesVisible="False">
+                                <dxc:AxisX2D.Label>
+                                    <dxc:AxisLabel FontSize="10">
+                                        <dxc:Axis2D.ResolveOverlappingOptions>
+                                            <dxc:AxisLabelResolveOverlappingOptions AllowRotate="False" />
+                                        </dxc:Axis2D.ResolveOverlappingOptions>
+                                    </dxc:AxisLabel>
+                                </dxc:AxisX2D.Label>
+                            </dxc:AxisX2D>
+                        </dxc:XYDiagram2D.AxisX>
+                        <dxc:XYDiagram2D.Series>
+                            <dxc:BarSideBySideSeries2D
+                                ArgumentDataMember="Key"
+                                ArgumentScaleType="Qualitative"
+                                BarWidth="0.95"
+                                DataSource="{Binding CompleteTransactionsPLs}"
+                                DisplayName="PL"
+                                LabelsVisibility="False"
+                                ShowInLegend="False"
+                                ValueDataMember="Value">
+                                <dxc:BarSideBySideSeries2D.Model>
+                                    <dxc:SimpleBar2DModel />
+                                </dxc:BarSideBySideSeries2D.Model>
+                            </dxc:BarSideBySideSeries2D>
+                        </dxc:XYDiagram2D.Series>
+                    </dxc:XYDiagram2D>
+                </dxc:ChartControl.Diagram>
+                <dxc:ChartControl.Legend>
+                    <dxc:Legend HorizontalPosition="Left" VerticalPosition="Top" />
+                </dxc:ChartControl.Legend>
+            </dxc:ChartControl>
+        </dxlc:LayoutGroup>
+
+    </dxlc:LayoutGroup>
+
+</UserControl>

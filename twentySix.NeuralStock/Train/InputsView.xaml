@@ -1,0 +1,237 @@
+﻿<UserControl
+    x:Class="twentySix.NeuralStock.Train.InputsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:twentySix.NeuralStock.Train"
+    d:DataContext="{d:DesignInstance Type=viewModels:TrainViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Shared.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <dxmvvm:BooleanToObjectConverter
+                x:Key="IsTrainingToIconConverter"
+                FalseValue="Train"
+                TrueValue="Stop" />
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Width="400" VerticalAlignment="Stretch">
+
+        <dxlc:LayoutGroup
+            DockPanel.Dock="Top"
+            ItemSpace="10"
+            Orientation="Vertical">
+            <dxlc:LayoutItem>
+                <StackPanel Orientation="Horizontal">
+                    <dxe:ButtonEdit
+                        Width="150"
+                        Height="35"
+                        HorizontalAlignment="Left"
+                        AllowDefaultButton="False"
+                        CharacterCasing="Upper"
+                        EditValue="{Binding StockSymbol, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="18"
+                        Foreground="Goldenrod"
+                        IsReadOnly="{Binding IsBusy}"
+                        NullText="enter stock symbol"
+                        ValidateOnEnterKeyPressed="True">
+                        <dxe:ButtonInfo
+                            Command="{Binding DownloadDataCommand}"
+                            GlyphKind="Search"
+                            ToolTipService.ToolTip="Search" />
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:FocusBehavior FocusDelay="0:0:0.1" />
+                            <dxmvvm:KeyToCommand Command="{Binding DownloadDataCommand}" KeyGesture="Enter" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxe:ButtonEdit>
+                    <dxe:ToggleSwitch
+                        Margin="20,0,0,0"
+                        HorizontalAlignment="Left"
+                        CheckedStateContent="Singapore"
+                        ContentPlacement="Far"
+                        EnableAnimation="False"
+                        IsChecked="{Binding IsCountrySingapore}"
+                        IsReadOnly="{Binding IsBusy}"
+                        UncheckedStateContent="Portugal" />
+                </StackPanel>
+            </dxlc:LayoutItem>
+
+            <dxlc:LayoutItem>
+                <dxe:TextEdit
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Stretch"
+                    EditMode="InplaceInactive"
+                    EditValue="{Binding Stock.Name}"
+                    FontFamily="Work Sans"
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    Style="{StaticResource TextEditReadOnlyStyle}"
+                    ToolTip="{Binding Stock.Name}" />
+            </dxlc:LayoutItem>
+
+            <dxlc:LayoutGroup
+                Margin="0,10,0,0"
+                ItemLabelsAlignment="Default"
+                ItemSpace="10"
+                Orientation="Horizontal">
+                <dxlc:LayoutGroup.Resources>
+                    <Style BasedOn="{StaticResource TextEditReadOnlyBoldStyle}" TargetType="dxe:TextEdit" />
+                    <Style TargetType="dxlc:LayoutItemLabel">
+                        <Setter Property="Opacity" Value="0.4" />
+                    </Style>
+                </dxlc:LayoutGroup.Resources>
+                <dxlc:LayoutItem Label="last update">
+                    <dxe:TextEdit
+                        EditValue="{Binding LastQuote.Date}"
+                        Mask="d"
+                        MaskType="DateTime"
+                        MaskUseAsDisplayFormat="True" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="price">
+                    <dxe:TextEdit EditValue="{Binding LastQuote.Close}" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+
+        </dxlc:LayoutGroup>
+
+        <!--  buttons  -->
+        <dxlc:LayoutGroup
+            Margin="0,70,0,0"
+            VerticalAlignment="Stretch"
+            DockPanel.Dock="Top"
+            Orientation="Vertical">
+
+            <dxlc:LayoutGroup VerticalAlignment="Center" Orientation="Horizontal">
+                <dxlc:LayoutItem VerticalAlignment="Center">
+                    <dxe:HyperlinkEdit
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding TrainCommand}"
+                        EditValue="{Binding IsTraining, Converter={StaticResource IsTrainingToIconConverter}}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem VerticalAlignment="Center">
+                    <dxe:HyperlinkEdit
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding NavigateToCommand}"
+                        CommandParameter="SettingsView"
+                        EditValue="Settings" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem VerticalAlignment="Center">
+                    <dxe:HyperlinkEdit
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding SaveCommand}"
+                        EditValue="Save" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutItem VerticalAlignment="Bottom">
+                <StackPanel>
+                    <dxe:ProgressBarEdit
+                        Height="18"
+                        ContentDisplayMode="Value"
+                        DisplayFormatString="{}{0:p1}"
+                        IsPercent="True"
+                        Maximum="100"
+                        Minimum="0"
+                        ShowBorder="False"
+                        Value="{Binding TrainingSession.Progress}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Titillium Web"
+                        FontSize="12"
+                        Text="{Binding TrainingSession.TimeLeft, StringFormat={}{0:mm}m {0:ss}s}" />
+                </StackPanel>
+            </dxlc:LayoutItem>
+
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup
+            Margin="0,20,0,10"
+            VerticalAlignment="Bottom"
+            DockPanel.Dock="Bottom"
+            Header="Testing Set"
+            ItemSpace="10"
+            Orientation="Vertical"
+            View="GroupBox">
+            <dxlc:LayoutGroup.Resources>
+                <Style BasedOn="{StaticResource TextEditReadOnlyBoldStyle}" TargetType="dxe:TextEdit" />
+                <Style TargetType="dxlc:LayoutItemLabel">
+                    <Setter Property="Opacity" Value="0.4" />
+                </Style>
+            </dxlc:LayoutGroup.Resources>
+            <dxlc:LayoutGroup ItemSpace="10" Orientation="Horizontal">
+                <dxlc:LayoutItem Label="start date">
+                    <dxe:TextEdit
+                        EditValue="{Binding TestingData.BeginDate, Mode=OneWay}"
+                        FontSize="15"
+                        Mask="d"
+                        MaskType="DateTime"
+                        MaskUseAsDisplayFormat="True" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="end date">
+                    <dxe:TextEdit
+                        EditValue="{Binding TestingData.EndDate, Mode=OneWay}"
+                        FontSize="15"
+                        Mask="d"
+                        MaskType="DateTime"
+                        MaskUseAsDisplayFormat="True" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutItem Label="number days">
+                <dxe:TextEdit EditValue="{Binding TestingData.Quotes.Values.Count, Mode=OneWay}" FontSize="15" />
+            </dxlc:LayoutItem>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutGroup
+            Margin="0,40,0,0"
+            VerticalAlignment="Bottom"
+            DockPanel.Dock="Bottom"
+            Header="Training Set"
+            ItemSpace="10"
+            Orientation="Vertical"
+            View="GroupBox">
+            <dxlc:LayoutGroup.Resources>
+                <Style BasedOn="{StaticResource TextEditReadOnlyBoldStyle}" TargetType="dxe:TextEdit" />
+                <Style TargetType="dxlc:LayoutItemLabel">
+                    <Setter Property="Opacity" Value="0.4" />
+                </Style>
+            </dxlc:LayoutGroup.Resources>
+            <dxlc:LayoutGroup ItemSpace="10" Orientation="Horizontal">
+                <dxlc:LayoutItem Label="start date">
+                    <dxe:TextEdit
+                        EditValue="{Binding TrainingData.BeginDate, Mode=OneWay}"
+                        FontSize="15"
+                        Mask="d"
+                        MaskType="DateTime"
+                        MaskUseAsDisplayFormat="True" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="end date">
+                    <dxe:TextEdit
+                        EditValue="{Binding TrainingData.EndDate, Mode=OneWay}"
+                        FontSize="15"
+                        Mask="d"
+                        MaskType="DateTime"
+                        MaskUseAsDisplayFormat="True" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutItem Label="number days">
+                <dxe:TextEdit EditValue="{Binding TrainingData.Quotes.Values.Count, Mode=OneWay}" FontSize="15" />
+            </dxlc:LayoutItem>
+        </dxlc:LayoutGroup>
+
+    </DockPanel>
+
+</UserControl>

@@ -1,0 +1,112 @@
+﻿<UserControl
+    x:Class="twentySix.NeuralStock.Settings.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="clr-namespace:twentySix.NeuralStock.Settings"
+    d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    DataContext="{dxmvvm:ViewModelSource Type=settings:SettingsViewModel}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary />
+    </UserControl.Resources>
+
+    <dxwui:PageAdornerControl
+        Padding="0"
+        BackCommand="{Binding GoBackCommand}"
+        Header="Settings">
+        <dxlc:LayoutControl Width="600" StretchContentVertically="False">
+            <dxlc:LayoutGroup
+                VerticalAlignment="Center"
+                ItemSpace="20"
+                Orientation="Vertical">
+                <dxlc:LayoutGroup.Resources>
+                    <Style TargetType="dxe:TextEdit">
+                        <Setter Property="Margin" Value="20,0,0,0" />
+                        <Setter Property="Height" Value="36" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                </dxlc:LayoutGroup.Resources>
+                <dxlc:LayoutGroup.ItemStyle>
+                    <Style TargetType="dxlc:LayoutItem">
+                        <Setter Property="LabelPosition" Value="Left" />
+                        <Setter Property="LabelStyle">
+                            <Setter.Value>
+                                <Style TargetType="dxlc:LayoutItemLabel">
+                                    <Setter Property="FontFamily" Value="Work Sans Light" />
+                                    <Setter Property="FontSize" Value="15" />
+                                    <Setter Property="Opacity" Value="0.7" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dxlc:LayoutGroup.ItemStyle>
+                <dxlc:LayoutGroup
+                    Header="Portfolio"
+                    Orientation="Vertical"
+                    View="GroupBox">
+                    <dxlc:LayoutItem Label="initial cash value">
+                        <dxe:TextEdit
+                            EditValue="{Binding Settings.InitialCash}"
+                            Mask="c"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup
+                    Header="Data"
+                    Orientation="Vertical"
+                    View="GroupBox">
+                    <dxlc:LayoutItem Label="start date">
+                        <dxe:DateEdit EditValue="{Binding Settings.StartDate}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="percentage used for training">
+                        <dxe:TextEdit
+                            EditValue="{Binding Settings.PercentageTraining}"
+                            Mask="p"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup
+                    Header="Neural network"
+                    Orientation="Vertical"
+                    View="GroupBox">
+                    <dxlc:LayoutItem Label="number of networks to train">
+                        <dxe:TextEdit
+                            EditValue="{Binding Settings.NumberANNs}"
+                            Mask="d"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="number of hidden layers">
+                        <dxe:TextEdit
+                            EditValue="{Binding Settings.NumberHiddenLayers}"
+                            Mask="d"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="neurons per hidden layer">
+                        <dxe:TextEdit
+                            EditValue="{Binding Settings.NumberNeuronsHiddenLayer}"
+                            Mask="d"
+                            MaskType="Numeric"
+                            MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </dxwui:PageAdornerControl>
+</UserControl>
+
+
+

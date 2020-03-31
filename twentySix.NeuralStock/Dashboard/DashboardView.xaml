@@ -1,0 +1,215 @@
+﻿<UserControl
+    x:Class="twentySix.NeuralStock.Dashboard.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dashboard="clr-namespace:twentySix.NeuralStock.Dashboard"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:enums1="clr-namespace:twentySix.NeuralStock.Core.Enums;assembly=twentySix.NeuralStock.Core"
+    dx:ThemeManager.ThemeName="MetropolisDark"
+    DataContext="{dxmvvm:ViewModelSource Type=dashboard:DashboardViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/twentySix.NeuralStock;component/Resources/Shared.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="TextEditReadOnlyStyle" TargetType="dxe:TextEdit">
+                <Setter Property="FontFamily" Value="Work Sans Light" />
+                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="ShowBorder" Value="False" />
+            </Style>
+
+            <dxmvvm:ObjectToObjectConverter x:Key="SeverityToColourConverter">
+                <dxmvvm:MapItem Source="{x:Static enums1:SeverityEnum.Info}" Target="{x:Static Colors.Black}" />
+                <dxmvvm:MapItem Source="{x:Static enums1:SeverityEnum.Warning}" Target="{x:Static Colors.DarkGoldenrod}" />
+                <dxmvvm:MapItem Source="{x:Static enums1:SeverityEnum.Error}" Target="{x:Static Colors.Red}" />
+            </dxmvvm:ObjectToObjectConverter>
+
+            <dxmvvm:ObjectToObjectConverter x:Key="SignalToTextConverter">
+                <dxmvvm:MapItem Source="{x:Static enums1:SignalEnum.Buy}" Target="B" />
+                <dxmvvm:MapItem Source="{x:Static enums1:SignalEnum.Neutral}" Target="-" />
+                <dxmvvm:MapItem Source="{x:Static enums1:SignalEnum.Sell}" Target="S" />
+            </dxmvvm:ObjectToObjectConverter>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <dxwui:PageAdornerControl
+        Padding="0"
+        DockPanel.Dock="Top"
+        Header="Dashboard">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Grid.Row="0"
+                Margin="0,0,0,5"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Setter Property="Margin" Value="0,0,3,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <dxe:HyperlinkEdit
+                    Margin="0,0,10,0"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="SettingsView"
+                    EditValue="Settings" />
+                <dxe:HyperlinkEdit
+                    Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=StocksTable}"
+                    EditValue="Delete" />
+                <dxe:HyperlinkEdit Command="{Binding CancelCommand}" EditValue="Cancel" />
+                <dxe:HyperlinkEdit Command="{Binding RefreshCommand}" EditValue="Refresh" />
+                <dxe:HyperlinkEdit
+                    Margin="0"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TrainView"
+                    EditValue="Train" />
+            </StackPanel>
+
+            <dxg:GridControl
+                x:Name="StocksTable"
+                Grid.Row="1"
+                dx:ThemeManager.ThemeName="MetropolisDark"
+                ItemsSource="{Binding Predictions}"
+                ShowLoadingPanel="{Binding IsBusy}">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand
+                        Command="{Binding NavigateToTrainViewCommand}"
+                        EventName="MouseDoubleClick"
+                        PassEventArgsToCommand="True">
+                        <dxmvvm:EventToCommand.EventArgsConverter>
+                            <dx:EventArgsToDataRowConverter />
+                        </dxmvvm:EventToCommand.EventArgsConverter>
+                    </dxmvvm:EventToCommand>
+                </dxmvvm:Interaction.Behaviors>
+                <dxg:GridControl.Resources>
+                    <Style TargetType="dxg:GridColumn">
+                        <Setter Property="ReadOnly" Value="True" />
+                        <Setter Property="AllowSorting" Value="True" />
+                    </Style>
+                    <Style TargetType="dxg:GridRow">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                </dxg:GridControl.Resources>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn
+                        Width="100"
+                        FieldName="Symbol"
+                        Header="Symbol"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        Width="150"
+                        FieldName="Name"
+                        Header="Name"
+                        SortIndex="0"
+                        SortOrder="Ascending" />
+                    <dxg:GridColumn
+                        FieldName="LastUpdate"
+                        Header="Last data update"
+                        Visible="False">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="LastTrainingDate" Header="Last training">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="d" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="Close" Header="Close">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="c" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="TrainingSession.BestProfitLossCalculator.PL" Header="PL">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="c" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="TrainingSession.BestProfitLossCalculator.PercentageWinningTransactions" Header="% win">
+                        <dxg:GridColumn.EditSettings>
+                            <dxe:TextSettings DisplayFormat="p" />
+                        </dxg:GridColumn.EditSettings>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="TrainingSession.BestProfitLossCalculator.LatestSignal" Header="Latest signals">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <DataTemplate.Resources>
+                                    <Style TargetType="Rectangle">
+                                        <Setter Property="Height" Value="18" />
+                                        <Setter Property="Width" Value="18" />
+                                    </Style>
+                                </DataTemplate.Resources>
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <dxe:TextEdit
+                                        EditValue="{Binding RowData.Row.TrainingSession.BestProfitLossCalculator.ThirdLastSignal, Converter={StaticResource SignalToTextConverter}, Mode=OneWay}"
+                                        IsReadOnly="True"
+                                        ShowBorder="False" />
+                                    <dxe:TextEdit
+                                        EditValue="{Binding RowData.Row.TrainingSession.BestProfitLossCalculator.SecondLastSignal, Converter={StaticResource SignalToTextConverter}, Mode=OneWay}"
+                                        IsReadOnly="True"
+                                        ShowBorder="False" />
+                                    <dxe:TextEdit
+                                        EditValue="{Binding RowData.Row.TrainingSession.BestProfitLossCalculator.LatestSignal, Converter={StaticResource SignalToTextConverter}, Mode=OneWay}"
+                                        IsReadOnly="True"
+                                        ShowBorder="False" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                </dxg:GridControl.Columns>
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        AllowCascadeUpdate="False"
+                        AllowScrollAnimation="True"
+                        AutoWidth="True"
+                        EnableImmediatePosting="True"
+                        FontFamily="Roboto"
+                        FontSize="14"
+                        HeaderPanelMinHeight="32"
+                        NavigationStyle="Row"
+                        RowMinHeight="26"
+                        ShowGroupPanel="False"
+                        ShowIndicator="False" />
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+
+            <Grid
+                Grid.Row="2"
+                Height="20"
+                Margin="10,0"
+                HorizontalAlignment="Stretch"
+                Background="White">
+                <dxe:TextEdit
+                    Margin="10,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    EditValue="{Binding Status, UpdateSourceTrigger=PropertyChanged}"
+                    Foreground="{Binding StatusSeverity, Converter={StaticResource SeverityToColourConverter}}"
+                    Style="{StaticResource TextEditReadOnlyStyle}" />
+            </Grid>
+        </Grid>
+    </dxwui:PageAdornerControl>
+</UserControl>
+
+
+
+
+
+
+

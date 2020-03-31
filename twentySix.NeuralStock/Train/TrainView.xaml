@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="twentySix.NeuralStock.Train.TrainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:twentySix.NeuralStock.Train"
+             xmlns:enums="clr-namespace:twentySix.NeuralStock.Core.Enums;assembly=twentySix.NeuralStock.Core"
+             d:DataContext="{d:DesignInstance Type=viewModels:TrainViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             DataContext="{dxmvvm:ViewModelSource Type=viewModels:TrainViewModel}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Shared.xaml" />
+                <ResourceDictionary Source="/twentySix.NeuralStock;component/Resources/Shared.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <dxmvvm:ObjectToObjectConverter x:Key="SeverityToColourConverter">
+                <dxmvvm:MapItem Source="{x:Static enums:SeverityEnum.Info}"
+                                Target="{x:Static Colors.Black}" />
+                <dxmvvm:MapItem Source="{x:Static enums:SeverityEnum.Warning}"
+                                Target="{x:Static Colors.DarkGoldenrod}" />
+                <dxmvvm:MapItem Source="{x:Static enums:SeverityEnum.Error}"
+                                Target="{x:Static Colors.Red}" />
+            </dxmvvm:ObjectToObjectConverter>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <dxwui:PageAdornerControl Padding="0"
+                              DockPanel.Dock="Top"
+                              Header="Train">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <viewModels:InputsView Grid.Column="0" />
+                <viewModels:DataView Grid.Column="2" />
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Height="20"
+                  Margin="10,0"
+                  HorizontalAlignment="Stretch"
+                  Background="White">
+                <dxe:TextEdit Margin="10,0"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              EditValue="{Binding Status, UpdateSourceTrigger=PropertyChanged}"
+                              Foreground="{Binding StatusSeverity, Converter={StaticResource SeverityToColourConverter}}"
+                              Style="{StaticResource TextEditReadOnlyStyle}" />
+            </Grid>
+        </Grid>
+    </dxwui:PageAdornerControl>
+</UserControl>
+
+
+

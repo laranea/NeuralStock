@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="SectionBackgroundColour">#2444</Color>
+    <Color x:Key="LabelForegroundColour">#d444</Color>
+    <Color x:Key="ButtonForegroundColour">#0090C1</Color>
+    <Color x:Key="ButtonLightForegroundColour">#d777</Color>
+    <Color x:Key="ButtonDarkForegroundColour">#d222</Color>
+
+    <SolidColorBrush x:Key="SectionBackgroundBrush" Color="{StaticResource SectionBackgroundColour}" />
+    <SolidColorBrush x:Key="LabelForegroundBrush" Color="{StaticResource LabelForegroundColour}" />
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="{StaticResource ButtonForegroundColour}" />
+    <SolidColorBrush x:Key="ButtonLighForegroundBrush" Color="{StaticResource ButtonLightForegroundColour}" />
+    <SolidColorBrush x:Key="ButtonDarkForegroundBrush" Color="{StaticResource ButtonDarkForegroundColour}" />
+
+</ResourceDictionary>
